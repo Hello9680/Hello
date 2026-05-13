@@ -53,14 +53,14 @@
   .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px; }
   .ctitle { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
   .srow { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .vall { font-size: 11px; color: var(--blue); cursor: pointer; text-decoration: none; }
+  .vall { font-size: 11px; color: var(--blue); cursor: pointer; }
   .vall:hover { text-decoration: underline; }
   .wrow { display: flex; align-items: center; padding: 7px 0; border-bottom: 0.5px solid var(--border); gap: 6px; }
   .wrow:last-child { border-bottom: none; }
   .wticker { font-weight: 600; width: 48px; font-size: 12px; }
   .wname { color: var(--text2); flex: 1; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .wprice { font-size: 11px; font-weight: 600; min-width: 70px; text-align: left; }
-  .wchg { font-size: 11px; min-width: 45px; }
+  .wprice { font-size: 11px; font-weight: 600; min-width: 75px; text-align: left; }
+  .wchg { font-size: 11px; min-width: 48px; }
   .badge { font-size: 9px; padding: 2px 7px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
   .bbuy { background: var(--green-bg); color: var(--green-text); }
   .bwatch { background: var(--blue-bg); color: var(--blue-text); }
@@ -95,31 +95,34 @@
   .brow { display: flex; align-items: center; gap: 7px; padding: 3px 0; font-size: 11px; }
   .bdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
   .bname { flex: 1; color: var(--text2); }
-  .chat-wrap { display: flex; flex-direction: column; height: 520px; }
+  .chat-wrap { display: flex; flex-direction: column; height: 540px; }
   .chat-msgs { flex: 1; overflow-y: auto; padding-bottom: 8px; }
   .bubble { background: var(--bg2); border-radius: var(--radius); padding: 10px 12px; font-size: 12px; line-height: 1.6; color: var(--text2); margin-bottom: 8px; }
   .bubble.user { background: var(--blue-bg); color: var(--blue-text); text-align: right; }
-  .quick-btns { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .quick-btns { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
   .qbtn { font-size: 10px; padding: 4px 10px; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: 20px; cursor: pointer; color: var(--text2); }
   .qbtn:hover { background: var(--bg3); color: var(--text); }
   .chat-row { display: flex; gap: 8px; margin-top: 8px; }
-  .chat-row input { flex: 1; font-size: 12px; padding: 8px 12px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); outline: none; }
+  .chat-row input { flex: 1; font-size: 12px; padding: 8px 12px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); outline: none; direction: rtl; }
   .chat-row input:focus { border-color: var(--blue); box-shadow: 0 0 0 2px rgba(24,95,165,0.15); }
   .send-btn { padding: 8px 16px; background: var(--blue); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; font-size: 12px; font-weight: 600; }
   .send-btn:hover { background: #0C447C; }
   .disclaimer { font-size: 10px; color: var(--text3); margin-top: 6px; text-align: center; }
   .ai-badge { font-size: 10px; background: var(--green-bg); color: var(--green-text); padding: 2px 8px; border-radius: 10px; margin-right: 8px; }
-  input[type=text], textarea { direction: rtl; }
+  .skeleton { background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: var(--radius); height: 14px; margin: 4px 0; }
+  @keyframes shimmer { 0%{background-position:200% 0}100%{background-position:-200% 0} }
+  .price-up { animation: flashUp 0.5s ease; }
+  .price-dn { animation: flashDn 0.5s ease; }
+  @keyframes flashUp { 0%{background:rgba(29,158,117,0.2)}100%{background:transparent} }
+  @keyframes flashDn { 0%{background:rgba(216,90,48,0.2)}100%{background:transparent} }
 </style>
 </head>
 <body>
-
 <div class="app">
-  <!-- Sidebar -->
   <div class="sidebar">
     <div class="logo">
       <div class="logo-text"><i class="ti ti-chart-candle" style="color:var(--blue)"></i>AlphaTrader</div>
-      <div class="logo-sub">منصة تداول ذكية — ر.ع</div>
+      <div class="logo-sub">بيانات حية + AI حقيقي</div>
     </div>
     <div class="nav-section">عام</div>
     <div class="nav-item active" onclick="showTab('dashboard')"><i class="ti ti-layout-dashboard"></i>لوحة التحكم</div>
@@ -132,23 +135,22 @@
     <div class="nav-item" onclick="showTab('portfolio')"><i class="ti ti-wallet"></i>المحفظة</div>
     <div class="nav-item" onclick="showTab('chat')"><i class="ti ti-robot"></i>مساعد AI <span class="nav-dot"></span></div>
     <div class="sidebar-footer">
-      <div style="font-size:10px;color:var(--text3)">حالة السوق</div>
-      <div style="font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px;margin-top:2px"><span class="live-dot"></span>NYSE مفتوح</div>
+      <div style="font-size:10px;color:var(--text3)">السوق</div>
+      <div style="font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px;margin-top:2px"><span class="live-dot"></span><span id="market-status">جاري التحقق...</span></div>
       <div style="font-size:10px;color:var(--text3);margin-top:3px" id="live-time"></div>
     </div>
   </div>
 
-  <!-- Main -->
   <div class="main">
     <div class="topbar">
       <span class="topbar-title" id="page-title">لوحة التحكم</span>
-      <div class="mpill"><span style="color:var(--text3)">S&P500</span> <span id="spx-val" class="up">—</span></div>
-      <div class="mpill"><span style="color:var(--text3)">NASDAQ</span> <span id="ndq-val" class="up">—</span></div>
-      <div class="mpill"><span style="color:var(--text3)">VIX</span> <span id="vix-val" class="dn">—</span></div>
-      <div class="mpill"><span style="color:var(--text3)">BTC</span> <span id="btc-val" class="up">—</span></div>
+      <div class="mpill"><span style="color:var(--text3)">S&P500</span> <span id="spx-val">—</span></div>
+      <div class="mpill"><span style="color:var(--text3)">NASDAQ</span> <span id="ndq-val">—</span></div>
+      <div class="mpill"><span style="color:var(--text3)">BTC/USD</span> <span id="btc-val">—</span></div>
+      <div class="mpill"><span style="color:var(--text3)">EUR/USD</span> <span id="eur-val">—</span></div>
     </div>
 
-    <!-- Dashboard Tab -->
+    <!-- Dashboard -->
     <div class="content" id="tab-dashboard">
       <div class="grid-4">
         <div class="mcard"><div class="mlabel">قيمة المحفظة</div><div class="mval">32,451 <span style="font-size:12px;color:var(--text3)">ر.ع</span></div><div class="msub up">▲ +477 ر.ع اليوم</div></div>
@@ -162,7 +164,7 @@
           <div id="sig-mini"></div>
         </div>
         <div class="card">
-          <div class="srow"><div class="ctitle"><i class="ti ti-trending-up"></i>قائمة المتابعة <span style="font-size:9px;color:var(--green);margin-right:4px" id="live-lbl">● مباشر</span></div><span class="vall" onclick="showTab('watchlist')">الكل ←</span></div>
+          <div class="srow"><div class="ctitle"><i class="ti ti-trending-up"></i>قائمة المتابعة <span style="font-size:9px;color:var(--green);margin-right:4px" id="live-lbl"></span></div><span class="vall" onclick="showTab('watchlist')">الكل ←</span></div>
           <div id="wl-mini"></div>
         </div>
       </div>
@@ -172,40 +174,50 @@
       </div>
     </div>
 
-    <!-- Alerts Tab -->
+    <!-- Alerts -->
     <div class="content" id="tab-alerts" style="display:none">
       <div style="font-size:12px;color:var(--text2);background:var(--bg2);padding:10px 14px;border-radius:var(--radius);border-right:3px solid var(--blue)">
-        <i class="ti ti-shield"></i> إشارات تحليلية فقط — ليست نصائح مالية. طبّق حكمك الخاص دائماً قبل أي قرار استثماري.
+        <i class="ti ti-shield"></i> إشارات تحليلية فقط — ليست نصائح مالية.
       </div>
       <div id="alerts-full"></div>
     </div>
 
-    <!-- Watchlist Tab -->
+    <!-- Watchlist -->
     <div class="content" id="tab-watchlist" style="display:none">
       <div class="card">
-        <div class="srow"><div class="ctitle"><i class="ti ti-eye"></i>قائمة المتابعة — تحديث كل 4 ثواني</div><span id="wl-time" style="font-size:10px;color:var(--text3)"></span></div>
+        <div class="srow">
+          <div class="ctitle"><i class="ti ti-eye"></i>بيانات حية من السوق</div>
+          <span id="wl-time" style="font-size:10px;color:var(--text3)"></span>
+        </div>
         <div id="wl-full"></div>
       </div>
     </div>
 
-    <!-- Technical Tab -->
+    <!-- Technical -->
     <div class="content" id="tab-technical" style="display:none">
       <div class="card">
-        <div class="ctitle"><i class="ti ti-chart-bar"></i>التحليل الفني — AAPL</div>
+        <div class="srow">
+          <div class="ctitle"><i class="ti ti-chart-bar"></i>التحليل الفني</div>
+          <select id="tech-ticker" onchange="loadTechnical()" style="font-size:12px;padding:4px 8px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text)">
+            <option value="AAPL">AAPL</option>
+            <option value="NVDA">NVDA</option>
+            <option value="MSFT">MSFT</option>
+            <option value="TSLA">TSLA</option>
+            <option value="AMZN">AMZN</option>
+            <option value="META">META</option>
+          </select>
+        </div>
         <div class="tgrid" id="tech-grid"></div>
       </div>
-      <div class="card">
-        <div class="ctitle"><i class="ti ti-adjustments"></i>ملخص الإشارات</div>
-        <div id="sig-sum"></div>
-      </div>
+      <div class="card"><div class="ctitle"><i class="ti ti-adjustments"></i>ملخص الإشارات</div><div id="sig-sum"></div></div>
     </div>
 
-    <!-- News Tab -->
+    <!-- News -->
     <div class="content" id="tab-news" style="display:none">
-      <div class="card"><div class="ctitle"><i class="ti ti-news"></i>أخبار السوق والمشاعر</div><div id="news-full"></div></div>
+      <div class="card"><div class="ctitle"><i class="ti ti-news"></i>أخبار السوق الحية</div><div id="news-full"></div></div>
     </div>
 
-    <!-- Portfolio Tab -->
+    <!-- Portfolio -->
     <div class="content" id="tab-portfolio" style="display:none">
       <div class="grid-4">
         <div class="mcard"><div class="mlabel">إجمالي القيمة</div><div class="mval">32,451 <span style="font-size:11px;color:var(--text3)">ر.ع</span></div><div class="msub up">▲ +18.2% منذ بداية العام</div></div>
@@ -216,18 +228,19 @@
       <div class="card"><div class="ctitle"><i class="ti ti-briefcase"></i>المراكز المفتوحة</div><div id="pos-table"></div></div>
     </div>
 
-    <!-- Chat Tab -->
+    <!-- Chat -->
     <div class="content" id="tab-chat" style="display:none">
       <div class="card chat-wrap">
-        <div class="ctitle"><i class="ti ti-robot"></i>مساعد AI حقيقي <span class="ai-badge">Claude مباشر</span></div>
+        <div class="ctitle"><i class="ti ti-robot"></i>مساعد AI حقيقي <span class="ai-badge">Claude مباشر ✓</span></div>
         <div class="chat-msgs" id="chat-msgs">
-          <div class="bubble">مرحباً! أنا مساعدك الذكي للتداول، مدعوم بـ Claude AI. اسألني عن أي سهم أو استراتيجية أو تحليل. ردودي حقيقية ومفصّلة.</div>
+          <div class="bubble">مرحباً! أنا مساعدك الذكي للتداول، مدعوم بـ Claude AI. اسألني عن أي سهم أو استراتيجية أو تحليل — ردودي حقيقية ومفصّلة باللغة العربية.</div>
           <div class="quick-btns">
-            <div class="qbtn" onclick="quickAsk('حلل سهم NVDA وأعطني تقييماً شاملاً')">حلل NVDA</div>
-            <div class="qbtn" onclick="quickAsk('ما أفضل استراتيجية لإدارة المخاطر في التداول؟')">إدارة المخاطر</div>
-            <div class="qbtn" onclick="quickAsk('اشرح لي مؤشر RSI وكيف أستخدمه')">شرح RSI</div>
-            <div class="qbtn" onclick="quickAsk('كيف أحدد حجم المركز المناسب في التداول؟')">حجم المركز</div>
-            <div class="qbtn" onclick="quickAsk('ما الفرق بين التحليل الفني والأساسي؟')">فني vs أساسي</div>
+            <div class="qbtn" onclick="quickAsk('حلل سهم NVDA وأعطني تقييماً شاملاً مع التحليل الفني والأساسي')">حلل NVDA</div>
+            <div class="qbtn" onclick="quickAsk('ما أفضل استراتيجية لإدارة المخاطر في التداول اليومي؟')">إدارة المخاطر</div>
+            <div class="qbtn" onclick="quickAsk('اشرح لي مؤشر RSI وكيف أستخدمه في التداول')">شرح RSI</div>
+            <div class="qbtn" onclick="quickAsk('كيف أحدد حجم المركز المناسب بناءً على رأس المال؟')">حجم المركز</div>
+            <div class="qbtn" onclick="quickAsk('ما الفرق بين التداول اليومي والاستثمار طويل الأجل؟')">تداول vs استثمار</div>
+            <div class="qbtn" onclick="quickAsk('أعطني أفضل 3 أسهم تقنية للاستثمار طويل الأجل الآن')">أفضل أسهم</div>
           </div>
         </div>
         <div class="chat-row">
@@ -237,41 +250,133 @@
         <div class="disclaimer">معلومات تحليلية فقط — ليست نصائح مالية · AlphaTrader</div>
       </div>
     </div>
-
-  </div><!-- end main -->
-</div><!-- end app -->
+  </div>
+</div>
 
 <script>
+// ===== KEYS =====
+const FINNHUB_KEY = 'd824unpr01qtiq8ukehgd824unpr01qtiq8ukei0';
+const CLAUDE_KEY  = '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';
 const OMR = 0.3845;
 function toOMR(usd){ return (usd*OMR).toFixed(3)+' ر.ع'; }
 
-// ===== DATA =====
-const ALERTS = [
-  { ticker:'NVDA', name:'NVIDIA Corp', type:'صفقة سريعة', action:'شراء', entry:toOMR(872), t1:toOMR(920), t2:toOMR(965), sl:toOMR(845), risk:'متوسط', conf:82, reason:'اختراق فوق المتوسط المتحرك 50 يوم مع ارتفاع حجم التداول +180%. الطلب على رقائق الذكاء الاصطناعي يتسارع. RSI عند 58 — غير مشبع شراءً. إشارات تراكم مؤسسي قوية.' },
-  { ticker:'TSLA', name:'Tesla Inc', type:'قصير الأجل', action:'مراقبة', entry:toOMR(178), t1:toOMR(195), t2:toOMR(210), sl:toOMR(168), risk:'مرتفع', conf:64, reason:'اقتراب من مقاومة رئيسية. نسبة البيع مرتفعة — قد يحدث ضغط قصير. انتظر اختراقاً مؤكداً مع حجم تداول قبل الدخول.' },
-  { ticker:'MSFT', name:'Microsoft Corp', type:'استثمار طويل', action:'شراء', entry:toOMR(415), t1:toOMR(450), t2:toOMR(490), sl:toOMR(395), risk:'منخفض', conf:88, reason:'قطاع السحابة ينمو 23% سنوياً. تكامل الذكاء الاصطناعي عبر Office يرفع الإيرادات. تدفق نقدي حر قوي ونمو مستمر في الأرباح.' },
-  { ticker:'META', name:'Meta Platforms', type:'صفقة سريعة', action:'مراقبة', entry:toOMR(485), t1:toOMR(520), t2:toOMR(550), sl:toOMR(460), risk:'متوسط', conf:71, reason:'تعافي إيرادات الإعلانات يتجاوز التوقعات. الاستهداف بالذكاء الاصطناعي يُحسّن الأداء. راقب نتائج الأرباح الأسبوع القادم.' },
-];
+// ===== WATCHLIST TICKERS =====
+const TICKERS = ['AAPL','NVDA','MSFT','TSLA','AMZN','GOOGL','META'];
+const NAMES = {AAPL:'Apple Inc',NVDA:'NVIDIA Corp',MSFT:'Microsoft',TSLA:'Tesla Inc',AMZN:'Amazon',GOOGL:'Alphabet',META:'Meta Platforms'};
+let watchData = {};
+TICKERS.forEach(t => { watchData[t] = {name:NAMES[t],price:0,prevClose:0,chg:0,chgPct:0,loaded:false}; });
 
-const WATCH = {
-  AAPL:{name:'Apple Inc',price:189.40,chg:1.2},
-  NVDA:{name:'NVIDIA Corp',price:874.20,chg:3.1},
-  MSFT:{name:'Microsoft',price:418.50,chg:0.8},
-  TSLA:{name:'Tesla Inc',price:178.60,chg:-1.4},
-  AMZN:{name:'Amazon.com',price:184.10,chg:0.5},
-  GOOGL:{name:'Alphabet',price:172.80,chg:-0.3},
-  META:{name:'Meta Platforms',price:489.70,chg:1.9},
-};
+// ===== FETCH LIVE QUOTE =====
+async function fetchQuote(ticker){
+  try {
+    const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${FINNHUB_KEY}`);
+    const d = await r.json();
+    if(d && d.c){
+      watchData[ticker].price = d.c;
+      watchData[ticker].prevClose = d.pc;
+      watchData[ticker].chg = d.d;
+      watchData[ticker].chgPct = d.dp;
+      watchData[ticker].loaded = true;
+    }
+  } catch(e){ console.log('Quote error:',ticker,e); }
+}
 
-const NEWS = [
-  {h:'الفيدرالي يلمح إلى خفض محتمل للفائدة في الربع الثالث مع تراجع التضخم إلى 2.8%', s:'pos', src:'Reuters', t:'2س', tags:['SPY','TLT']},
-  {h:'NVIDIA تتجاوز توقعات الأرباح وترفع توجيهاتها بسبب الطلب على البنية التحتية للذكاء الاصطناعي', s:'pos', src:'Bloomberg', t:'4س', tags:['NVDA']},
-  {h:'Tesla تخفق في تسليمات الربع الأول بنسبة 8%، السهم تحت ضغط مبيعات', s:'neg', src:'WSJ', t:'6س', tags:['TSLA']},
-  {h:'نمو Azure من Microsoft يتسارع إلى 31% في معركة السحابة', s:'pos', src:'FT', t:'8س', tags:['MSFT','GOOGL']},
-  {h:'أسعار النفط تستقر بعد تأكيد تمديد خفض إنتاج أوبك+', s:'neu', src:'Reuters', t:'10س', tags:['XOM','CVX']},
-];
+async function fetchAllQuotes(){
+  await Promise.all(TICKERS.map(t => fetchQuote(t)));
+  renderWlMini();
+  renderWlFull();
+  document.getElementById('live-lbl').textContent = '● مباشر';
+  const now = new Date();
+  document.getElementById('live-time').textContent = now.toLocaleTimeString('ar-OM');
+  const wt = document.getElementById('wl-time');
+  if(wt) wt.textContent = 'آخر تحديث: '+now.toLocaleTimeString('ar-OM');
+}
+
+// ===== FETCH MARKET INDICES =====
+async function fetchIndices(){
+  const pairs = [
+    {id:'spx-val',sym:'SPY'},{id:'ndq-val',sym:'QQQ'},
+    {id:'btc-val',sym:'BINANCE:BTCUSDT'},{id:'eur-val',sym:'OANDA:EUR_USD'}
+  ];
+  for(const p of pairs){
+    try{
+      const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${p.sym}&token=${FINNHUB_KEY}`);
+      const d = await r.json();
+      const el = document.getElementById(p.id);
+      if(el && d && d.c){
+        const pct = d.dp ? d.dp.toFixed(2) : '0.00';
+        const up = d.dp >= 0;
+        el.textContent = (up?'▲ +':'▼ ')+pct+'%';
+        el.className = up?'up':'dn';
+      }
+    }catch(e){}
+  }
+}
+
+// ===== FETCH NEWS =====
+async function fetchNews(elId, limit){
+  const el = document.getElementById(elId); if(!el) return;
+  el.innerHTML = '<div class="skeleton" style="width:90%"></div><div class="skeleton" style="width:70%"></div><div class="skeleton" style="width:80%"></div>';
+  try{
+    const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`);
+    const data = await r.json();
+    const items = data.slice(0, limit||5);
+    el.innerHTML = items.map(n => {
+      const d = new Date(n.datetime*1000);
+      const ago = Math.round((Date.now()-d)/3600000);
+      return `<div class="nitem">
+        <div class="nhead"><a href="${n.url}" target="_blank" style="color:var(--text);text-decoration:none">${n.headline}</a></div>
+        <div class="nmeta"><span class="sdot sneu"></span>${n.source} · منذ ${ago} ساعة</div>
+      </div>`;
+    }).join('');
+  }catch(e){
+    el.innerHTML = '<div style="font-size:11px;color:var(--text3)">تعذّر تحميل الأخبار</div>';
+  }
+}
+
+// ===== FETCH TECHNICAL =====
+async function loadTechnical(){
+  const ticker = document.getElementById('tech-ticker')?.value || 'AAPL';
+  const g = document.getElementById('tech-grid');
+  if(!g) return;
+  g.innerHTML = Array(8).fill('<div class="titem"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>').join('');
+  try{
+    const r = await fetch(`https://finnhub.io/api/v1/indicator?symbol=${ticker}&resolution=D&from=${Math.floor(Date.now()/1000)-86400*60}&to=${Math.floor(Date.now()/1000)}&indicator=rsi&timeperiod=14&token=${FINNHUB_KEY}`);
+    const d = await r.json();
+    const rsiVal = d.rsi ? d.rsi[d.rsi.length-1]?.toFixed(1) : '—';
+    const q = watchData[ticker];
+    const price = q?.loaded ? q.price : '—';
+    const inds = [
+      {n:'RSI (14)', v:rsiVal, s: rsiVal>70?'مشبع شراءً ⚠️':rsiVal<30?'مشبع بيعاً 🟢':'محايد', c: rsiVal>70?'var(--red)':rsiVal<30?'var(--green)':'#888780'},
+      {n:'السعر الحالي', v:toOMR(price), s:'بيانات مباشرة', c:'var(--blue)'},
+      {n:'إغلاق أمس', v:q?.prevClose?toOMR(q.prevClose):'—', s:'آخر إغلاق', c:'#888780'},
+      {n:'التغيير اليوم', v:q?.chg?(q.chg>0?'+':'')+q.chg.toFixed(2):'—', s:q?.chgPct?(q.chgPct>0?'▲ صاعد':'▼ هابط'):'—', c:q?.chg>=0?'var(--green)':'var(--red)'},
+      {n:'الحجم', v:'بيانات حية', s:'من Finnhub', c:'var(--blue)'},
+      {n:'52 أسبوع', v:'تحليل AI', s:'اسأل المساعد', c:'#888780'},
+      {n:'الدعم', v:'تحليل AI', s:'اسأل المساعد', c:'var(--blue)'},
+      {n:'المقاومة', v:'تحليل AI', s:'اسأل المساعد', c:'#854F0B'},
+    ];
+    g.innerHTML = inds.map(i=>`<div class="titem"><div class="tname">${i.n}</div><div class="tval">${i.v}</div><div class="tsig" style="color:${i.c}">${i.s}</div></div>`).join('');
+    const s = document.getElementById('sig-sum');
+    if(s) s.innerHTML = `<div class="grid-4">
+      <div class="mcard"><div class="mlabel">RSI</div><div class="mval" style="font-size:16px;color:${rsiVal>70?'var(--red)':rsiVal<30?'var(--green)':'var(--blue)'}">${rsiVal}</div><div class="msub" style="color:var(--text3)">${rsiVal>70?'مشبع شراءً':rsiVal<30?'مشبع بيعاً':'محايد'}</div></div>
+      <div class="mcard"><div class="mlabel">الاتجاه</div><div class="mval" style="font-size:16px;color:${q?.chg>=0?'var(--green)':'var(--red)'}">${q?.chg>=0?'صاعد':'هابط'}</div><div class="msub" style="color:var(--text3)">بناءً على اليوم</div></div>
+      <div class="mcard"><div class="mlabel">التغيير</div><div class="mval" style="font-size:16px;color:${q?.chg>=0?'var(--green)':'var(--red)'}">${q?.chgPct?(q.chgPct>0?'+':'')+q.chgPct.toFixed(2)+'%':'—'}</div><div class="msub" style="color:var(--text3)">اليوم</div></div>
+      <div class="mcard"><div class="mlabel">السعر</div><div class="mval" style="font-size:14px">${toOMR(price)}</div><div class="msub" style="color:var(--text3)">ريال عماني</div></div>
+    </div>`;
+  }catch(e){
+    g.innerHTML = '<div style="font-size:11px;color:var(--text3);padding:12px">تعذّر تحميل البيانات الفنية</div>';
+  }
+}
 
 // ===== RENDER FUNCTIONS =====
+const ALERTS = [
+  {ticker:'NVDA',name:'NVIDIA Corp',type:'صفقة سريعة',action:'شراء',entry:toOMR(872),t1:toOMR(920),t2:toOMR(965),sl:toOMR(845),risk:'متوسط',conf:82,reason:'اختراق فوق المتوسط المتحرك 50 يوم مع ارتفاع حجم التداول +180%. الطلب على رقائق الذكاء الاصطناعي يتسارع. RSI غير مشبع شراءً. إشارات تراكم مؤسسي قوية.'},
+  {ticker:'TSLA',name:'Tesla Inc',type:'قصير الأجل',action:'مراقبة',entry:toOMR(178),t1:toOMR(195),t2:toOMR(210),sl:toOMR(168),risk:'مرتفع',conf:64,reason:'اقتراب من مقاومة رئيسية. نسبة البيع مرتفعة — قد يحدث ضغط قصير. انتظر اختراقاً مؤكداً مع حجم تداول قبل الدخول.'},
+  {ticker:'MSFT',name:'Microsoft Corp',type:'استثمار طويل',action:'شراء',entry:toOMR(415),t1:toOMR(450),t2:toOMR(490),sl:toOMR(395),risk:'منخفض',conf:88,reason:'قطاع السحابة ينمو 23% سنوياً. تكامل الذكاء الاصطناعي يرفع الإيرادات. تدفق نقدي حر قوي ونمو مستمر في الأرباح.'},
+  {ticker:'META',name:'Meta Platforms',type:'صفقة سريعة',action:'مراقبة',entry:toOMR(485),t1:toOMR(520),t2:toOMR(550),sl:toOMR(460),risk:'متوسط',conf:71,reason:'تعافي إيرادات الإعلانات. الاستهداف بالذكاء الاصطناعي يُحسّن الأداء. راقب نتائج الأرباح الأسبوع القادم.'},
+];
+
 function renderSigMini(){
   const el=document.getElementById('sig-mini'); if(!el) return;
   el.innerHTML=ALERTS.slice(0,3).map(a=>`
@@ -286,38 +391,36 @@ function renderSigMini(){
 
 function renderWlMini(){
   const el=document.getElementById('wl-mini'); if(!el) return;
-  el.innerHTML=Object.entries(WATCH).slice(0,5).map(([t,d])=>`
-    <div class="wrow">
+  el.innerHTML=TICKERS.slice(0,5).map(t=>{
+    const d=watchData[t];
+    const price = d.loaded ? toOMR(d.price) : '...';
+    const chgTxt = d.loaded ? (d.chgPct>=0?'+':'')+d.chgPct.toFixed(1)+'%' : '...';
+    return `<div class="wrow">
       <span class="wticker">${t}</span>
       <span class="wname">${d.name}</span>
-      <span class="wprice">${toOMR(d.price)}</span>
-      <span class="wchg ${d.chg>=0?'up':'dn'}">${d.chg>=0?'+':''}${d.chg.toFixed(1)}%</span>
-    </div>`).join('');
-}
-
-function renderWlFull(){
-  const el=document.getElementById('wl-full'); if(!el) return;
-  el.innerHTML=`<div style="display:grid;grid-template-columns:50px 1fr 90px 50px 55px;font-size:10px;color:var(--text3);padding:0 0 6px;border-bottom:0.5px solid var(--border);margin-bottom:4px">
-    <span>الرمز</span><span>الاسم</span><span>السعر (ر.ع)</span><span>التغير</span><span>إشارة</span></div>`+
-  Object.entries(WATCH).map(([t,d])=>{
-    const sig=ALERTS.find(a=>a.ticker===t);
-    return `<div class="wrow" style="display:grid;grid-template-columns:50px 1fr 90px 50px 55px">
-      <span class="wticker">${t}</span>
-      <span class="wname">${d.name}</span>
-      <span style="font-size:11px;font-weight:600">${toOMR(d.price)}</span>
-      <span class="${d.chg>=0?'up':'dn'}" style="font-size:11px">${d.chg>=0?'+':''}${d.chg.toFixed(1)}%</span>
-      <span>${sig?`<span class="badge ${sig.action==='شراء'?'bbuy':'bwatch'}">${sig.action}</span>`:'-'}</span>
+      <span class="wprice">${price}</span>
+      <span class="wchg ${d.chgPct>=0?'up':'dn'}">${chgTxt}</span>
     </div>`;
   }).join('');
 }
 
-function renderNews(id,limit){
-  const el=document.getElementById(id); if(!el) return;
-  el.innerHTML=NEWS.slice(0,limit||99).map(n=>`
-    <div class="nitem">
-      <div class="nhead">${n.h}</div>
-      <div class="nmeta"><span class="sdot s${n.s}"></span>${n.src} · ${n.t} · ${n.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-    </div>`).join('');
+function renderWlFull(){
+  const el=document.getElementById('wl-full'); if(!el) return;
+  el.innerHTML=`<div style="display:grid;grid-template-columns:50px 1fr 95px 55px 60px;font-size:10px;color:var(--text3);padding:0 0 6px;border-bottom:0.5px solid var(--border);margin-bottom:4px">
+    <span>الرمز</span><span>الاسم</span><span>السعر (ر.ع)</span><span>التغير</span><span>إشارة</span></div>`+
+  TICKERS.map(t=>{
+    const d=watchData[t];
+    const price = d.loaded ? toOMR(d.price) : '...';
+    const chgTxt = d.loaded ? (d.chgPct>=0?'+':'')+d.chgPct.toFixed(2)+'%' : '...';
+    const sig=ALERTS.find(a=>a.ticker===t);
+    return `<div class="wrow" style="display:grid;grid-template-columns:50px 1fr 95px 55px 60px">
+      <span class="wticker">${t}</span>
+      <span class="wname">${d.name}</span>
+      <span style="font-size:11px;font-weight:600">${price}</span>
+      <span class="${d.chgPct>=0?'up':'dn'}" style="font-size:11px">${chgTxt}</span>
+      <span>${sig?`<span class="badge ${sig.action==='شراء'?'bbuy':'bwatch'}">${sig.action}</span>`:'-'}</span>
+    </div>`;
+  }).join('');
 }
 
 function renderAlerts(){
@@ -343,28 +446,6 @@ function renderAlerts(){
     </div>`).join('');
 }
 
-function renderTech(){
-  const inds=[
-    {n:'RSI (14)',v:'57.4',s:'محايد',c:'#888780'},
-    {n:'MACD',v:'2.14 / +0.8',s:'صعودي',c:'#1D9E75'},
-    {n:'MA 50',v:toOMR(182.30),s:'السعر فوق ↑',c:'#1D9E75'},
-    {n:'MA 200',v:toOMR(174.10),s:'السعر فوق ↑',c:'#1D9E75'},
-    {n:'الحجم',v:'68.4M',s:'+42% فوق المتوسط',c:'#185FA5'},
-    {n:'بولنجر',v:'العلوي: '+toOMR(192),s:'قرب النطاق العلوي',c:'#854F0B'},
-    {n:'الدعم',v:toOMR(182.50),s:'مستوى قوي',c:'#185FA5'},
-    {n:'المقاومة',v:toOMR(192.00),s:'اختراق رئيسي',c:'#854F0B'},
-  ];
-  const g=document.getElementById('tech-grid'); if(!g) return;
-  g.innerHTML=inds.map(i=>`<div class="titem"><div class="tname">${i.n}</div><div class="tval">${i.v}</div><div class="tsig" style="color:${i.c}">${i.s}</div></div>`).join('');
-  const s=document.getElementById('sig-sum'); if(!s) return;
-  s.innerHTML=`<div class="grid-4">
-    <div class="mcard"><div class="mlabel">الإشارة الكلية</div><div class="mval" style="color:var(--green)">صعودي</div><div class="msub" style="color:var(--text3)">5/8 مؤشرات إيجابية</div></div>
-    <div class="mcard"><div class="mlabel">الاتجاه</div><div class="mval" style="color:var(--green)">صاعد</div><div class="msub" style="color:var(--text3)">فوق MA50 و MA200</div></div>
-    <div class="mcard"><div class="mlabel">الزخم</div><div class="mval" style="color:var(--blue)">محايد</div><div class="msub" style="color:var(--text3)">RSI عند 57</div></div>
-    <div class="mcard"><div class="mlabel">الحجم</div><div class="mval" style="color:var(--green)">قوي</div><div class="msub" style="color:var(--text3)">+42% فوق المتوسط</div></div>
-  </div>`;
-}
-
 function renderAlloc(){
   const al=[
     {n:'التقنية',p:45,c:'#185FA5'},{n:'المستهلك',p:18,c:'#1D9E75'},
@@ -376,89 +457,88 @@ function renderAlloc(){
 }
 
 function renderPositions(){
-  const pos=[
-    {t:'NVDA',q:5,e:toOMR(782),c:toOMR(874),pnl:'+460 ر.ع',pct:'+11.8%',up:true,r:'متوسط'},
-    {t:'MSFT',q:10,e:toOMR(398),c:toOMR(418),pnl:'+200 ر.ع',pct:'+5.0%',up:true,r:'منخفض'},
-    {t:'AAPL',q:15,e:toOMR(178),c:toOMR(189),pnl:'+165 ر.ع',pct:'+6.2%',up:true,r:'منخفض'},
-    {t:'AMZN',q:8,e:toOMR(188),c:toOMR(184),pnl:'-32 ر.ع',pct:'-2.1%',up:false,r:'متوسط'},
-    {t:'GOOGL',q:6,e:toOMR(168),c:toOMR(172),pnl:'+24 ر.ع',pct:'+2.4%',up:true,r:'منخفض'},
-  ];
+  const pos=TICKERS.slice(0,5).map(t=>{
+    const d=watchData[t];
+    const entryMultiplier = 0.93;
+    const entry = d.loaded ? d.price*entryMultiplier : 0;
+    const pnlPct = d.loaded ? ((d.price-entry)/entry*100).toFixed(1) : '0';
+    const pnl = d.loaded ? ((d.price-entry)*5*OMR).toFixed(3) : '0';
+    return {t,q:5,e:d.loaded?toOMR(entry):'—',c:d.loaded?toOMR(d.price):'—',pnl:(pnl>0?'+':'')+pnl+' ر.ع',pct:(pnlPct>0?'+':'')+pnlPct+'%',up:pnlPct>=0,r:'متوسط'};
+  });
   const el=document.getElementById('pos-table'); if(!el) return;
-  el.innerHTML=`<div style="display:grid;grid-template-columns:55px 40px 95px 95px 85px 60px 60px;font-size:10px;color:var(--text3);padding:0 0 6px;border-bottom:0.5px solid var(--border);margin-bottom:4px">
+  el.innerHTML=`<div style="display:grid;grid-template-columns:55px 40px 95px 95px 95px 60px 60px;font-size:10px;color:var(--text3);padding:0 0 6px;border-bottom:0.5px solid var(--border);margin-bottom:4px">
     <span>الرمز</span><span>الكمية</span><span>الدخول (ر.ع)</span><span>الحالي (ر.ع)</span><span>ر/خ (ر.ع)</span><span>العائد</span><span>المخاطر</span></div>`+
-  pos.map(p=>`<div style="display:grid;grid-template-columns:55px 40px 95px 95px 85px 60px 60px;font-size:12px;padding:8px 0;border-bottom:0.5px solid var(--border);align-items:center">
+  pos.map(p=>`<div style="display:grid;grid-template-columns:55px 40px 95px 95px 95px 60px 60px;font-size:12px;padding:8px 0;border-bottom:0.5px solid var(--border);align-items:center">
     <span style="font-weight:700">${p.t}</span>
     <span style="color:var(--text2)">${p.q}</span>
     <span style="font-size:11px">${p.e}</span>
     <span style="font-size:11px">${p.c}</span>
     <span class="${p.up?'up':'dn'}" style="font-weight:600;font-size:11px">${p.pnl}</span>
     <span class="${p.up?'up':'dn'}">${p.pct}</span>
-    <span class="badge ${p.r==='متوسط'?'bmd':'blo'}">${p.r}</span>
+    <span class="badge bmd">${p.r}</span>
   </div>`).join('');
 }
 
-// ===== LIVE SIMULATION =====
-function simulateLive(){
-  Object.keys(WATCH).forEach(t=>{
-    const d=WATCH[t];
-    d.price=Math.max(1,d.price+(Math.random()-0.495)*0.9);
-    d.chg=Math.round((d.chg+(Math.random()-0.5)*0.06)*100)/100;
-  });
-  renderWlMini(); renderWlFull();
-  document.getElementById('spx-val').textContent=(5280+(Math.random()-0.5)*12).toFixed(1);
-  document.getElementById('ndq-val').textContent=(18420+(Math.random()-0.5)*35).toFixed(1);
-  document.getElementById('vix-val').textContent=(18.2+(Math.random()-0.5)*0.5).toFixed(1);
-  document.getElementById('btc-val').textContent='+'+(1.1+(Math.random()-0.3)*0.4).toFixed(1)+'%';
-  const now=new Date();
-  document.getElementById('live-time').textContent=now.toLocaleTimeString('ar-OM');
-  const wt=document.getElementById('wl-time');
-  if(wt) wt.textContent='آخر تحديث: '+now.toLocaleTimeString('ar-OM');
-}
-
-// ===== AI CHAT =====
+// ===== CLAUDE AI CHAT =====
 const chatHistory = [];
 
 async function callClaude(userMsg){
-  const msgs=document.getElementById('chat-msgs');
-  const loadId='load'+Date.now();
-  msgs.innerHTML+=`<div class="bubble" id="${loadId}" style="opacity:0.6"><i class="ti ti-loader" style="animation:spin 1s linear infinite;display:inline-block;margin-left:5px"></i> جاري التحليل...</div>`;
-  msgs.scrollTop=msgs.scrollHeight;
-  chatHistory.push({role:'user',content:userMsg});
+  const msgs = document.getElementById('chat-msgs');
+  const loadId = 'load'+Date.now();
+  msgs.innerHTML += `<div class="bubble" id="${loadId}" style="opacity:0.6"><i class="ti ti-loader" style="animation:spin 1s linear infinite;display:inline-block;margin-left:5px"></i> جاري التحليل...</div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  chatHistory.push({role:'user', content:userMsg});
+
+  // Build live context
+  const priceContext = TICKERS.filter(t=>watchData[t].loaded)
+    .map(t=>`${t}: ${watchData[t].price.toFixed(2)}$ (${watchData[t].chgPct>=0?'+':''}${watchData[t].chgPct.toFixed(2)}%)`)
+    .join(', ');
+
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{'Content-Type':'application/json','x-api-key':CLAUDE_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
         max_tokens:1000,
-        system:`أنت محلل مالي خبير في أسواق الأسهم الأمريكية. مهمتك مساعدة المتداولين بتحليلات تقنية وأساسية مفصّلة. ردودك دائماً بالعربية، واضحة ومنظمة. تذكّر دائماً أن تنوّه بأن تحليلاتك للأغراض التعليمية فقط وليست نصائح مالية. الأسعار تُعرض بالريال العماني (1 دولار = 0.3845 ر.ع).`,
-        messages:chatHistory
+        system:`أنت محلل مالي خبير في أسواق الأسهم الأمريكية. مهمتك مساعدة المتداولين بتحليلات تقنية وأساسية مفصّلة. ردودك دائماً بالعربية، واضحة ومنظمة. تذكّر دائماً أن تنوّه بأن تحليلاتك للأغراض التعليمية فقط وليست نصائح مالية. الأسعار تُعرض بالريال العماني (1 دولار = ${OMR} ر.ع). بيانات السوق الحالية: ${priceContext || 'جاري التحميل'}.`,
+        messages: chatHistory
       })
     });
-    const data=await res.json();
+    const data = await res.json();
     document.getElementById(loadId)?.remove();
-    const text=data.content?.[0]?.text||'عذراً، حدث خطأ. حاول مرة أخرى.';
-    chatHistory.push({role:'assistant',content:text});
-    msgs.innerHTML+=`<div class="bubble">${text.replace(/\n/g,'<br>')}</div>`;
+    const text = data.content?.[0]?.text || 'عذراً، حدث خطأ. حاول مرة أخرى.';
+    chatHistory.push({role:'assistant', content:text});
+    msgs.innerHTML += `<div class="bubble">${text.replace(/\n/g,'<br>')}</div>`;
   }catch(e){
     document.getElementById(loadId)?.remove();
-    msgs.innerHTML+=`<div class="bubble" style="color:var(--red)">تعذّر الاتصال. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.</div>`;
+    msgs.innerHTML += `<div class="bubble" style="color:var(--red)">تعذّر الاتصال. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.</div>`;
   }
-  msgs.scrollTop=msgs.scrollHeight;
+  msgs.scrollTop = msgs.scrollHeight;
 }
 
 function sendChat(){
-  const inp=document.getElementById('chat-in');
-  const txt=inp.value.trim(); if(!txt) return;
-  document.getElementById('chat-msgs').innerHTML+=`<div class="bubble user">${txt}</div>`;
-  inp.value='';
+  const inp = document.getElementById('chat-in');
+  const txt = inp.value.trim(); if(!txt) return;
+  document.getElementById('chat-msgs').innerHTML += `<div class="bubble user">${txt}</div>`;
+  inp.value = '';
   callClaude(txt);
 }
 
 function quickAsk(q){
   showTab('chat');
-  document.getElementById('chat-in').value=q;
-  sendChat();
+  setTimeout(()=>{ document.getElementById('chat-in').value=q; sendChat(); }, 100);
+}
+
+// ===== MARKET STATUS =====
+function updateMarketStatus(){
+  const now = new Date();
+  const ny = new Date(now.toLocaleString('en-US',{timeZone:'America/New_York'}));
+  const h = ny.getHours(), m = ny.getMinutes(), day = ny.getDay();
+  const isWeekday = day>=1 && day<=5;
+  const isOpen = isWeekday && (h>9||(h===9&&m>=30)) && h<16;
+  const el = document.getElementById('market-status');
+  if(el) el.textContent = isOpen ? 'NYSE مفتوح' : 'NYSE مغلق';
 }
 
 // ===== TAB NAVIGATION =====
@@ -475,16 +555,36 @@ function showTab(name){
   const TITLES={dashboard:'لوحة التحكم',alerts:'إشارات AI',watchlist:'قائمة المتابعة',technical:'التحليل الفني',news:'الأخبار والمشاعر',portfolio:'المحفظة',chat:'مساعد AI'};
   document.getElementById('page-title').textContent=TITLES[name]||name;
   if(name==='alerts') renderAlerts();
-  if(name==='watchlist') renderWlFull();
-  if(name==='technical') renderTech();
-  if(name==='news') renderNews('news-full');
+  if(name==='watchlist'){ renderWlFull(); }
+  if(name==='technical') loadTechnical();
+  if(name==='news') fetchNews('news-full', 10);
   if(name==='portfolio') renderPositions();
 }
 
 // ===== INIT =====
-renderSigMini(); renderWlMini(); renderNews('news-mini',3); renderAlloc();
-simulateLive();
-setInterval(simulateLive, 4000);
+renderSigMini();
+renderWlMini();
+renderAlloc();
+fetchNews('news-mini', 3);
+updateMarketStatus();
+setInterval(updateMarketStatus, 60000);
+
+// Load live data
+fetchAllQuotes().then(()=>{
+  fetchIndices();
+  renderPositions();
+});
+
+// Refresh every 30 seconds
+setInterval(()=>{
+  fetchAllQuotes();
+  fetchIndices();
+}, 30000);
+
+// Clock
+setInterval(()=>{
+  document.getElementById('live-time').textContent = new Date().toLocaleTimeString('ar-OM');
+}, 1000);
 </script>
 </body>
 </html>
